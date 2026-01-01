@@ -8,7 +8,7 @@ function Header() {
         <div className="logo-placeholder">
           {/* Replace this img src later */}
           <img
-            src=""
+            src="/images/Smartsight Analytics.png"
             alt="SmartSight Logo"
             className="logo"
           />
