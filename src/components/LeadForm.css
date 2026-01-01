@@ -1,0 +1,41 @@
+.lead-form {
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.form-box {
+  background: white;
+  color: #000;
+  max-width: 420px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 14px;
+}
+
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+.form-box button {
+  width: 100%;
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.fallback {
+  font-size: 13px;
+  margin-top: 10px;
+  color: #475569;
+}

@@ -1,0 +1,59 @@
+.privacy {
+  padding: 70px 20px;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.privacy h2 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.privacy-subtitle {
+  color: #64748b;
+  margin-bottom: 40px;
+}
+
+/* HORIZONTAL TABLE-LIKE LAYOUT */
+.privacy-table {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.privacy-cell {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  font-size: 15px;
+  flex: 1 1 220px; /* flexible width */
+  min-width: 220px;
+  text-align: left;
+}
+
+/* CELL TITLES */
+.privacy-cell h3 {
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #1e293b;
+}
+
+/* CELL DESCRIPTION */
+.privacy-cell p {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* MOBILE ADJUSTMENT */
+@media (max-width: 768px) {
+  .privacy-table {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

@@ -1,0 +1,14 @@
+section {
+  padding: 80px 40px;
+}
+
+h1, h2, h3 {
+  margin-bottom: 16px;
+}
+
+button {
+  cursor: pointer;
+}
+html {
+  scroll-behavior: smooth;
+}

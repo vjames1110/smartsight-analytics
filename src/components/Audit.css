@@ -1,0 +1,54 @@
+.audit {
+  background: #ffffff;
+  padding: 80px 40px;
+}
+
+.audit h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 50px;
+}
+
+.audit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.audit-card {
+  background: #f4f6fb;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+.audit-card h3 {
+  margin-bottom: 10px;
+}
+
+.audit-output {
+  margin-top: 50px;
+  background: #0b132b;
+  color: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.audit-output ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.audit-output li {
+  margin-bottom: 10px;
+}
+
+.audit-output button {
+  background: #fca311;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+}

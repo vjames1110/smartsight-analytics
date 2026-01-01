@@ -1,0 +1,78 @@
+.how-it-works {
+  padding: 70px 20px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+.step-card {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+.step-card.active {
+  background: #eef2ff;
+  border-color: #2563eb;
+}
+
+.icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.step-card h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.short {
+  font-size: 14px;
+  color: #374151;
+}
+
+.details {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #111827;
+  line-height: 1.6;
+}
+
+.audit-cta button {
+  margin-top: 40px;
+  padding: 14px 28px;
+  font-size: 16px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.audit-cta button:hover {
+  background: #1e40af;
+}

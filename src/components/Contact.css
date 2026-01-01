@@ -1,0 +1,73 @@
+.contact {
+  background: linear-gradient(135deg, #0b132b, #1c2541);
+  color: #ffffff;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.contact-subtitle {
+  font-size: 15px;
+  color: #cbd5e1;
+  margin-bottom: 30px;
+}
+
+/* TABLE STYLE */
+.contact-table {
+  max-width: 500px;
+  margin: 0 auto 30px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.contact-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.contact-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.value {
+  color: #f1f5f9;
+}
+
+/* BUTTON */
+.contact-btn {
+  background: #fca311;
+  color: #000;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: #ffb703;
+  transform: translateY(-2px);
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .contact-row {
+    flex-direction: column;
+    text-align: left;
+    gap: 4px;
+  }
+}
