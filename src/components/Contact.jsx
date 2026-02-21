@@ -24,7 +24,7 @@ function Contact() {
 
         <div className="contact-row">
           <span className="label">📧 Email: </span>
-          <span className="value">smartsight.analytics@gmail.com</span>
+          <span className="value">smartsightanalytics@gmail.com</span>
         </div>
       </div>
 

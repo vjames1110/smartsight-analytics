@@ -68,20 +68,20 @@ function Services() {
   const [index, setIndex] = useState(null);
   const touchStartX = useRef(0);
 
-const prev = useCallback(() => {
-  setIndex((prevIndex) =>
-    prevIndex === null
-      ? 0
-      : (prevIndex - 1 + services.length) % services.length
-  );
-}, [services.length]);
-const next = useCallback(() => {
-  setIndex((prevIndex) =>
-    prevIndex === null
-      ? 0
-      : (prevIndex + 1) % services.length
-  );
-}, [services.length]);
+  const prev = useCallback(() => {
+    setIndex((prevIndex) =>
+      prevIndex === null
+        ? 0
+        : (prevIndex - 1 + services.length) % services.length
+    );
+  }, [services.length]);
+  const next = useCallback(() => {
+    setIndex((prevIndex) =>
+      prevIndex === null
+        ? 0
+        : (prevIndex + 1) % services.length
+    );
+  }, [services.length]);
 
   /* Keyboard Support */
   useEffect(() => {
@@ -119,7 +119,7 @@ const next = useCallback(() => {
 
       {index !== null && (
         <div className="modal-overlay"
-        onClick={() => setIndex(null)}>
+          onClick={() => setIndex(null)}>
           <div
             className="modal-box"
             onClick={(e) => e.stopPropagation()}
