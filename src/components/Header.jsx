@@ -8,7 +8,7 @@ function Header() {
     <header className="header">
       <div className="brand">
         <img
-          src="/images/Smartsight Analytics.png"
+          src="/images/ssalogo.png"
           alt="SmartSight Logo"
           className="logo"
         />
