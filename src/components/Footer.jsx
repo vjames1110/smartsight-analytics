@@ -6,19 +6,21 @@ function Footer() {
       <div className="footer-content">
         <h3>SmartSight Analytics</h3>
         <p>
-          Helping businesses grow using data-driven dashboards, insights,
-          and analytics solutions.
+          Professional IT services for websites, web apps, mobile apps, ERP,
+          custom software, dashboards, and business analytics.
         </p>
 
         <div className="footer-links">
           <a href="#services">Services</a>
           <a href="#audit">Free Audit</a>
+          <a href="#portfolio">Portfolio</a>
           <a href="#privacy">Privacy</a>
           <a href="#contact">Contact</a>
         </div>
 
         <p className="footer-copy">
-          © {new Date().getFullYear()} SmartSight Analytics. All Rights Reserved.
+          Copyright {new Date().getFullYear()} SmartSight Analytics. All Rights
+          Reserved.
         </p>
       </div>
     </footer>

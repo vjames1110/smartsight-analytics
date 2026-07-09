@@ -1,59 +1,43 @@
 .privacy {
-  padding: 70px 20px;
-  background: #f8fafc;
+  background:
+    linear-gradient(180deg, #f6f8fb 0%, #ffffff 100%);
   text-align: center;
 }
 
-.privacy h2 {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-.privacy-subtitle {
-  color: #64748b;
-  margin-bottom: 40px;
-}
-
-/* HORIZONTAL TABLE-LIKE LAYOUT */
 .privacy-table {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 20px;
-  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  max-width: 1180px;
   margin: 0 auto;
-  flex-wrap: wrap;
 }
 
 .privacy-cell {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  font-size: 15px;
-  flex: 1 1 220px; /* flexible width */
-  min-width: 220px;
+  background: #ffffff;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.07);
   text-align: left;
 }
 
-/* CELL TITLES */
+.privacy-cell span {
+  display: block;
+  width: 42px;
+  height: 4px;
+  margin-bottom: 18px;
+  background: #1f7663;
+  border-radius: 999px;
+}
+
 .privacy-cell h3 {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  color: #111827;
   font-size: 18px;
-  color: #1e293b;
 }
 
-/* CELL DESCRIPTION */
 .privacy-cell p {
-  color: #475569;
+  margin-bottom: 0;
+  color: #5b6575;
   font-size: 14px;
-  line-height: 1.5;
-}
-
-/* MOBILE ADJUSTMENT */
-@media (max-width: 768px) {
-  .privacy-table {
-    flex-direction: column;
-    gap: 15px;
-  }
 }

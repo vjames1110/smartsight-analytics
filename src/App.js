@@ -11,26 +11,34 @@ import Privacy from "./components/Privacy";
 import LeadForm from "./components/LeadForm";
 
 function App() {
+  const whatsappMessage =
+    "Hi SmartSight Analytics, I want to discuss a website, app, ERP, software, or analytics project.";
+
   return (
     <>
       <Header />
       <Banner />
       <LeadForm />
       <Audit />
-
-      {/* HOW IT WORKS FIRST */}
       <HowItWorks />
-
-      {/* THEN SERVICES */}
       <Services />
-
-      {/* THEN PORTFOLIO */}
       <Portfolio />
       <Privacy />
-
-      {/* LAST CONTACT */}
       <Contact />
       <Footer />
+
+      <a
+        className="fixed-whatsapp"
+        href={`https://wa.me/918374220978?text=${encodeURIComponent(
+          whatsappMessage
+        )}`}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat with SmartSight Analytics on WhatsApp"
+      >
+        <span className="fixed-whatsapp-mark">WA</span>
+        <span>WhatsApp</span>
+      </a>
     </>
   );
 }

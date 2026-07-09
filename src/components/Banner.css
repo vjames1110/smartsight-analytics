@@ -1,28 +1,102 @@
 .banner {
-  background: linear-gradient(135deg, #1d2671, #c33764);
-  color: white;
-  text-align: center;
-  padding: 120px 20px;
+  position: relative;
+  min-height: calc(100vh - 73px);
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  padding: 96px 40px;
+  background:
+    linear-gradient(90deg, rgba(3, 7, 18, 0.9) 0%, rgba(15, 23, 42, 0.78) 52%, rgba(15, 23, 42, 0.42) 100%),
+    url("../../public/images/interactive-dashboard.png") center/cover no-repeat;
+}
+
+.banner-content {
+  width: min(760px, 100%);
+}
+
+.banner-eyebrow {
+  display: inline-flex;
+  margin-bottom: 16px;
+  padding: 7px 12px;
+  color: #f8c14a;
+  background: rgba(248, 193, 74, 0.1);
+  border: 1px solid rgba(248, 193, 74, 0.28);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .banner h1 {
-  font-size: 48px;
+  margin-bottom: 18px;
+  font-size: clamp(42px, 7vw, 78px);
+  letter-spacing: 0;
 }
 
-.banner p {
-  font-size: 20px;
+.banner-copy {
+  max-width: 660px;
   margin-bottom: 30px;
+  color: #dbe4ef;
+  font-size: clamp(17px, 2vw, 22px);
+  line-height: 1.7;
 }
 
-.banner button {
-  background: #fca311;
-  border: none;
-  padding: 14px 30px;
+.banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.banner-primary,
+.banner-secondary {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 22px;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.banner button:hover {
-  background: #ffb703;
+.banner-primary {
+  color: #08111f;
+  background: #f8c14a;
+  box-shadow: 0 18px 36px rgba(248, 193, 74, 0.26);
+}
+
+.banner-secondary {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.banner-primary:hover,
+.banner-secondary:hover {
+  transform: translateY(-2px);
+}
+
+.banner-primary:hover {
+  background: #ffd166;
+}
+
+.banner-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 720px) {
+  .banner {
+    min-height: auto;
+    padding: 88px 20px 76px;
+    background:
+      linear-gradient(180deg, rgba(3, 7, 18, 0.92) 0%, rgba(15, 23, 42, 0.78) 100%),
+      url("../../public/images/interactive-dashboard.png") center/cover no-repeat;
+  }
+
+  .banner-primary,
+  .banner-secondary {
+    width: 100%;
+  }
 }

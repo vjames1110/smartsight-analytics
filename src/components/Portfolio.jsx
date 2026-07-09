@@ -19,30 +19,33 @@ function Portfolio() {
     setTimeout(() => {
       setActiveTab(tab);
       setAnimate(false);
-    }, 250);
+    }, 200);
   };
 
   return (
     <section className="portfolio" id="portfolio">
-      <h2>Sample Dashboards</h2>
-      <p className="portfolio-subtitle">
-        Explore real-world dashboards built for businesses
-      </p>
+      <div className="section-heading portfolio-heading">
+        <p className="section-kicker dark">Portfolio</p>
+        <h2>Dashboards, Systems, and Digital Experiences</h2>
+        <p>
+          Explore sample analytics dashboards. Similar reporting can be added
+          inside custom web apps, ERP modules, and business software.
+        </p>
+      </div>
 
-      {/* TABS */}
-      <div className="dashboard-tabs">
+      <div className="dashboard-tabs" role="tablist" aria-label="Dashboard samples">
         {Object.keys(dashboards).map((tab) => (
           <button
             key={tab}
             className={`tab-btn ${activeTab === tab ? "active" : ""}`}
             onClick={() => handleTabChange(tab)}
+            type="button"
           >
             {tab}
           </button>
         ))}
       </div>
 
-      {/* DASHBOARD VIEW */}
       <div className={`dashboard-view ${animate ? "fade-out" : "fade-in"}`}>
         <iframe
           src={dashboards[activeTab]}
@@ -52,22 +55,21 @@ function Portfolio() {
         ></iframe>
       </div>
 
-      {/* CUSTOM NOTE */}
-<div className="custom-note">
-  <p>
-    ✔ And many more dashboards can be created as per your business requirements
-  </p>
+      <div className="custom-note">
+        <p>
+          Custom dashboards, admin panels, ERP reports, and performance views can
+          be created around your exact business data.
+        </p>
 
-  <a
-    href="https://wa.me/918374220978?text=Hi%20I%20want%20a%20custom%20business%20dashboard"
-    target="_blank"
-    rel="noreferrer"
-    className="custom-btn"
-  >
-    Get a Custom Dashboard
-  </a>
-</div>
-
+        <a
+          href="https://wa.me/918374220978?text=Hi%20I%20want%20a%20custom%20dashboard%20or%20software%20solution"
+          target="_blank"
+          rel="noreferrer"
+          className="custom-btn"
+        >
+          Request a Custom Build
+        </a>
+      </div>
     </section>
   );
 }

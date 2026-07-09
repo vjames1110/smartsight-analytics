@@ -4,39 +4,39 @@ import "./HowItWorks.css";
 function HowItWorks() {
   const steps = [
     {
-      title: "You Share Your Data",
-      short: "Securely share your business data with us.",
+      title: "Discovery Call",
+      short: "We understand your business, users, goals, and pain points.",
       details:
-        "You can share Excel, CSV, Google Sheets, POS exports, or system reports. We guide you on exactly what data is required — nothing extra.",
-      icon: "📁",
+        "We discuss your current process, target audience, required features, data sources, budget range, and timeline before defining the solution direction.",
+      label: "01",
     },
     {
-      title: "Data Privacy & Confidentiality",
-      short: "Your data is 100% confidential and secure.",
+      title: "Solution Blueprint",
+      short: "We convert the requirement into screens, modules, and workflow.",
       details:
-        "Your data is never shared with third parties. Files are used strictly for analysis and deleted after project completion (unless monthly support is active). NDA available on request.",
-      icon: "🔒",
+        "You receive a practical plan covering feature scope, user roles, ERP modules, integrations, reporting needs, and delivery milestones.",
+      label: "02",
     },
     {
-      title: "Data Cleaning & Analysis",
-      short: "We clean, analyze, and structure your data.",
+      title: "Design & Development",
+      short: "We build clean, responsive, business-ready digital products.",
       details:
-        "We remove errors, duplicates, and inconsistencies before analysis. Industry best practices are followed to ensure accurate insights.",
-      icon: "📊",
+        "Our delivery can include web apps, mobile apps, admin panels, ERP modules, dashboards, APIs, automations, and secure databases.",
+      label: "03",
     },
     {
-      title: "Insights & Dashboards",
-      short: "You receive easy-to-understand outputs.",
+      title: "Testing & Launch",
+      short: "We test flows, data, responsiveness, and production readiness.",
       details:
-        "You get interactive dashboards, summary reports, and actionable insights tailored to your business goals — not generic charts.",
-      icon: "📈",
+        "Before launch, we validate core workflows, forms, reports, mobile behavior, speed, access controls, and handover requirements.",
+      label: "04",
     },
     {
-      title: "Delivery & Support",
-      short: "Clear explanation & post-delivery support.",
+      title: "Support & Improvements",
+      short: "We help refine, maintain, and extend the solution after launch.",
       details:
-        "We explain everything in simple language and offer WhatsApp/email support for queries. Monthly support available if needed.",
-      icon: "🤝",
+        "Monthly support is available for improvements, reporting, bug fixes, training, dashboards, and new feature releases.",
+      label: "05",
     },
   ];
 
@@ -44,32 +44,34 @@ function HowItWorks() {
 
   return (
     <section className="how-it-works" id="how-it-works">
-      <h2>How It Works & Your Data Safety</h2>
-      <p className="subtitle">
-        Simple process. Complete transparency. Zero data misuse.
-      </p>
+      <div className="section-heading">
+        <p className="section-kicker dark">How It Works</p>
+        <h2>From Idea to Working Digital Product</h2>
+        <p>
+          A clear delivery process for websites, apps, ERP systems, software,
+          analytics dashboards, and business automation.
+        </p>
+      </div>
 
       <div className="steps-container">
         {steps.map((step, index) => (
-          <div
-            key={index}
+          <button
+            key={step.title}
             className={`step-card ${active === index ? "active" : ""}`}
             onClick={() => setActive(index)}
+            type="button"
           >
-            <div className="icon">{step.icon}</div>
+            <span className="step-label">{step.label}</span>
             <h3>{step.title}</h3>
             <p className="short">{step.short}</p>
-
-            {active === index && (
-              <p className="details">{step.details}</p>
-            )}
-          </div>
+            {active === index && <p className="details">{step.details}</p>}
+          </button>
         ))}
       </div>
-      <a href="#audit" className="audit-cta">
-  <button>Get Free Business Audit</button>
-</a>
 
+      <a href="#services" className="audit-cta">
+        View Service Capabilities
+      </a>
     </section>
   );
 }
