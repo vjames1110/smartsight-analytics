@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import "./Services.css";
+import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "./Icons";
+import useModalBehavior from "../hooks/useModalBehavior";
+import { whatsappLink, trackEvent } from "../config/site";
 
 const services = [
   {
@@ -13,7 +16,7 @@ const services = [
       "API and payment gateway integrations",
     ],
     price: "Custom quote",
-    image: "/images/website-development.png",
+    image: "/images/website-development.webp",
     comparison: "Best for businesses that need browser-based software.",
     whatsappText: "Hi, I am interested in Web App Development.",
     category: "Web",
@@ -29,7 +32,7 @@ const services = [
       "Backend integration and deployment support",
     ],
     price: "Custom quote",
-    image: "/images/app-development.png",
+    image: "/images/app-development.webp",
     comparison: "Best for businesses that need access on the move.",
     whatsappText: "Hi, I am interested in Mobile App Development.",
     category: "Mobile",
@@ -45,7 +48,7 @@ const services = [
       "Reports for management decisions",
     ],
     price: "Custom quote",
-    image: "/images/erp-development.png",
+    image: "/images/erp-development.webp",
     comparison: "Best for companies ready to unify daily operations.",
     whatsappText: "Hi, I want to discuss ERP Development.",
     category: "ERP",
@@ -61,7 +64,7 @@ const services = [
       "Migration from Excel or existing tools",
     ],
     price: "Custom quote",
-    image: "/images/insights-report.png",
+    image: "/images/insights-report.webp",
     comparison: "Best for businesses with unique process requirements.",
     whatsappText: "Hi, I need a Customized ERP Solution.",
     category: "ERP",
@@ -77,7 +80,7 @@ const services = [
       "Testing, launch, and support",
     ],
     price: "Custom quote",
-    image: "/images/interactive-dashboard.png",
+    image: "/images/interactive-dashboard.webp",
     comparison: "Best when off-the-shelf tools do not fit your process.",
     whatsappText: "Hi, I am interested in Custom Software Development.",
     category: "Software",
@@ -93,10 +96,27 @@ const services = [
       "Growth recommendations from data",
     ],
     price: "Starting at Rs. 2,999",
-    image: "/images/performance-dashboard.png",
+    image: "/images/performance-dashboard.webp",
     comparison: "Best for data-driven visibility and performance tracking.",
     whatsappText: "Hi, I am interested in Business Analytics and Dashboards.",
     category: "Analytics",
+  },
+  {
+    title: "Industry-Specific Solutions",
+    description:
+      "Ready-to-adapt products for construction, healthcare, finance, community, education, logistics and more, customized to your process.",
+    details: [
+      "Proven modules you can adapt, not start from zero",
+      "Built around your workflow and data",
+      "Live dashboards and sample screens to review",
+      "Downloadable portfolio for your team",
+    ],
+    price: "Custom quote",
+    image: "/images/industry-solutions.svg",
+    comparison: "Best for businesses that want industry know-how built in.",
+    whatsappText: "Hi, I want an industry-specific solution for my business.",
+    category: "Industry",
+    link: { href: "#portfolio", label: "View Portfolio" },
   },
 ];
 
@@ -118,12 +138,14 @@ function Services() {
     );
   }, []);
 
+  const close = useCallback(() => setIndex(null), []);
+  useModalBehavior(index !== null, close);
+
   useEffect(() => {
     const handleKey = (e) => {
       if (index === null) return;
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
-      if (e.key === "Escape") setIndex(null);
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
@@ -175,36 +197,39 @@ function Services() {
       </div>
 
       {index !== null && (
-        <div className="modal-overlay" onClick={() => setIndex(null)}>
+        <div className="modal-overlay" onClick={close}>
           <div
             className="modal-box"
+            role="dialog"
+            aria-modal="true"
+            aria-label={services[index].title}
             onClick={(e) => e.stopPropagation()}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           >
             <button
-              className="service-close-btn"
-              onClick={() => setIndex(null)}
+              className="service-close-btn icon-btn"
+              onClick={close}
               aria-label="Close service details"
               type="button"
             >
-              Close
+              <CloseIcon />
             </button>
             <button
-              className="nav-arrow left"
+              className="nav-arrow icon-btn left"
               onClick={prev}
               aria-label="Previous service"
               type="button"
             >
-              Prev
+              <ChevronLeftIcon />
             </button>
             <button
-              className="nav-arrow right"
+              className="nav-arrow icon-btn right"
               onClick={next}
               aria-label="Next service"
               type="button"
             >
-              Next
+              <ChevronRightIcon />
             </button>
 
             <div className="modal-media">
@@ -231,16 +256,28 @@ function Services() {
 
             <div className="modal-footer">
               <p className="price">{services[index].price}</p>
+              {services[index].link && (
+                <a
+                  className="btn btn-dark"
+                  href={services[index].link.href}
+                  onClick={close}
+                >
+                  {services[index].link.label}
+                </a>
+              )}
               <a
-                href={`https://wa.me/918374220978?text=${encodeURIComponent(
-                  services[index].whatsappText
-                )}`}
+                className="btn btn-wa"
+                href={whatsappLink(services[index].whatsappText)}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() =>
+                  trackEvent("whatsapp_click", {
+                    location: "service_modal",
+                    service: services[index].title,
+                  })
+                }
               >
-                <button className="whatsapp-btn" type="button">
-                  Discuss This Service
-                </button>
+                Discuss This Service
               </a>
             </div>
 

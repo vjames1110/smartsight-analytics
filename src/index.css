@@ -1,8 +1,36 @@
+:root {
+  /* Surfaces */
+  --bg: #f6f8fb;
+  --navy: #0f172a;
+  --navy-950: #020617;
+
+  /* Text */
+  --ink: #111827;
+  --muted: #5b6575;
+
+  /* Accents: gold for CTAs on dark sections, green for accents on light ones */
+  --gold: #f8c14a;
+  --gold-hover: #ffd166;
+  --green: #1f7663;
+  --green-tint: #e7f5ef;
+
+  /* WhatsApp */
+  --wa: #16a34a;
+  --wa-hover: #15803d;
+
+  /* Lines */
+  --border: #e5e7eb;
+  --border-strong: #dfe6ee;
+
+  --radius: 8px;
+  --content-width: 1180px;
+}
+
 body {
   margin: 0;
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  background-color: #f6f8fb;
-  color: #111827;
+  background-color: var(--bg);
+  color: var(--ink);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -18,4 +46,27 @@ iframe {
 
 html {
   scroll-behavior: smooth;
+}
+
+body.scroll-locked {
+  overflow: hidden;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

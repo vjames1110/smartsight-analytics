@@ -1,42 +1,55 @@
 import "./App.css";
 import Header from "./components/Header";
 import Banner from "./components/Banner";
-import Audit from "./components/Audit";
+import LeadForm from "./components/LeadForm";
 import HowItWorks from "./components/HowItWorks";
 import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
+import Privacy from "./components/Privacy";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import Privacy from "./components/Privacy";
-import LeadForm from "./components/LeadForm";
+import PortfolioPrint from "./components/PortfolioPrint";
+import { WhatsAppIcon } from "./components/Icons";
+import { SITE, whatsappLink, trackEvent } from "./config/site";
+
+const isPrintMode =
+  typeof window !== "undefined" &&
+  new URLSearchParams(window.location.search).get("print") === "1";
 
 function App() {
+  if (isPrintMode) {
+    document.body.classList.add("print-mode");
+    return <PortfolioPrint />;
+  }
+
   const whatsappMessage =
     "Hi SmartSight Analytics, I want to discuss a website, app, ERP, software, or analytics project.";
 
   return (
     <>
       <Header />
-      <Banner />
-      <LeadForm />
-      <Audit />
-      <HowItWorks />
-      <Services />
-      <Portfolio />
-      <Privacy />
-      <Contact />
+      <main>
+        <Banner />
+        <Services />
+        <Portfolio />
+        <HowItWorks />
+        <LeadForm />
+        <Privacy />
+        <Contact />
+      </main>
       <Footer />
 
       <a
         className="fixed-whatsapp"
-        href={`https://wa.me/918374220978?text=${encodeURIComponent(
-          whatsappMessage
-        )}`}
+        href={whatsappLink(whatsappMessage)}
         target="_blank"
         rel="noreferrer"
-        aria-label="Chat with SmartSight Analytics on WhatsApp"
+        onClick={() => trackEvent("whatsapp_click", { location: "floating" })}
+        aria-label={`Chat with ${SITE.name} on WhatsApp`}
       >
-        <span className="fixed-whatsapp-mark">WA</span>
+        <span className="fixed-whatsapp-mark">
+          <WhatsAppIcon />
+        </span>
         <span>WhatsApp</span>
       </a>
     </>

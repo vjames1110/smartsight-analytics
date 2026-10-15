@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#020617"/>
+      <stop offset="0.6" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#10251f"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <g font-size="19" font-weight="700" fill="#ffffff">
+    <rect x="40" y="52" width="170" height="116" rx="12" fill="#b45309"/><text x="58" y="118">Construction</text>
+    <rect x="235" y="52" width="170" height="116" rx="12" fill="#0e7490"/><text x="253" y="118">Healthcare</text>
+    <rect x="430" y="52" width="170" height="116" rx="12" fill="#1f7663"/><text x="448" y="118">Finance</text>
+    <rect x="40" y="192" width="170" height="116" rx="12" fill="#2563eb"/><text x="58" y="258">Education</text>
+    <rect x="235" y="192" width="170" height="116" rx="12" fill="#c2410c"/><text x="253" y="258">Logistics</text>
+    <rect x="430" y="192" width="170" height="116" rx="12" fill="#7c3aed"/><text x="448" y="258">Community</text>
+  </g>
+</svg>

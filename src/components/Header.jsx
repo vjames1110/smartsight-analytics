@@ -1,77 +1,74 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import "./Header.css";
+import { MenuIcon, CloseIcon } from "./Icons";
+import useModalBehavior from "../hooks/useModalBehavior";
+
+const links = [
+  { href: "#how-it-works", label: "How It Works" },
+  { href: "#services", label: "Services" },
+  { href: "#portfolio", label: "Portfolio" },
+  { href: "#contact", label: "Contact" },
+];
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  useModalBehavior(menuOpen, closeMenu);
 
   return (
     <header className="header">
-      <div className="brand">
-        <img src="/images/ssalogo.png" alt="SmartSight Logo" className="logo" />
+      <a className="brand" href="#top" aria-label="SmartSight Analytics home">
+        <img src="/images/ssalogo.png" alt="" className="logo" />
         <div className="brand-text">
-          <h2>SmartSight Analytics</h2>
+          <p className="brand-name">SmartSight Analytics</p>
           <p className="tagline">IT Services, ERP, Software & Analytics</p>
         </div>
-      </div>
+      </a>
 
-      <nav className="nav">
+      <nav className="nav" aria-label="Main navigation">
         <a href="#audit" className="nav-audit-btn">
           Free Audit
         </a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#services">Services</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#privacy">Privacy</a>
-        <a href="#contact">Contact</a>
+        {links.map((link) => (
+          <a key={link.href} href={link.href}>
+            {link.label}
+          </a>
+        ))}
       </nav>
 
       <button
         className="hamburger"
         onClick={() => setMenuOpen(true)}
         aria-label="Open navigation menu"
+        aria-expanded={menuOpen}
         type="button"
       >
-        Menu
+        <MenuIcon />
       </button>
 
-      {menuOpen && (
-        <div className="overlay" onClick={() => setMenuOpen(false)}></div>
-      )}
+      {menuOpen && <div className="overlay" onClick={closeMenu}></div>}
 
-      <div className={`sidebar ${menuOpen ? "open" : ""}`}>
+      <div
+        className={`sidebar ${menuOpen ? "open" : ""}`}
+        inert={!menuOpen}
+      >
         <button
-          className="sidebar-close-btn"
-          onClick={() => setMenuOpen(false)}
+          className="sidebar-close-btn icon-btn"
+          onClick={closeMenu}
           aria-label="Close navigation menu"
           type="button"
         >
-          Close
+          <CloseIcon />
         </button>
 
-        <a href="#audit" onClick={() => setMenuOpen(false)}>
-          Free Audit
-        </a>
-        <a href="#how-it-works" onClick={() => setMenuOpen(false)}>
-          How It Works
-        </a>
-        <a href="#services" onClick={() => setMenuOpen(false)}>
-          Services
-        </a>
-        <a href="#portfolio" onClick={() => setMenuOpen(false)}>
-          Portfolio
-        </a>
-        <a href="#privacy" onClick={() => setMenuOpen(false)}>
-          Privacy
-        </a>
-        <a href="#contact" onClick={() => setMenuOpen(false)}>
-          Contact
-        </a>
-        <a
-          href="#contact"
-          className="mobile-audit-btn"
-          onClick={() => setMenuOpen(false)}
-        >
-          Book Consultation
+        {links.map((link) => (
+          <a key={link.href} href={link.href} onClick={closeMenu}>
+            {link.label}
+          </a>
+        ))}
+        <a href="#audit" className="mobile-audit-btn" onClick={closeMenu}>
+          Get Free Audit
         </a>
       </div>
     </header>

@@ -1,0 +1,274 @@
+.pm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(2, 6, 23, 0.72);
+}
+
+.pm-box {
+  position: relative;
+  width: min(980px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 26px;
+  text-align: left;
+  color: var(--ink);
+  background: #ffffff;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32);
+  animation: pmPop 0.25s ease;
+}
+
+@keyframes pmPop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pm-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--ink);
+  background: #f3f4f6;
+}
+
+.pm-head {
+  padding-right: 48px;
+  margin-bottom: 18px;
+}
+
+.pm-head h3 {
+  margin: 10px 0 6px;
+  font-size: clamp(26px, 4vw, 34px);
+}
+
+.pm-head p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.pm-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pm-domain,
+.pm-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pm-domain {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, #ffffff);
+}
+
+.pm-status.ready {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.pm-status.development {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.pm-status.blueprint {
+  color: #475569;
+  background: #e2e8f0;
+}
+
+.pm-tabs {
+  display: inline-flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 5px;
+  background: #eef2f7;
+  border-radius: var(--radius);
+}
+
+.pm-tabs button {
+  min-height: 36px;
+  padding: 6px 14px;
+  color: #475569;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.pm-tabs button.active {
+  color: #ffffff;
+  background: var(--green);
+}
+
+.pm-screen-scroll {
+  container: mockbox / inline-size;
+}
+
+.pm-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.pm-box.wide {
+  width: min(1480px, 98vw);
+}
+
+.pm-embed-box {
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.pm-embed-stage {
+  overflow: hidden;
+}
+
+.pm-embed-stage iframe {
+  max-width: none;
+  display: block;
+  border: 0;
+  transform-origin: top left;
+}
+
+.pm-fullscreen {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.pm-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.pm-story h4,
+.pm-sub {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.pm-story p {
+  margin: 0;
+  color: #374151;
+}
+
+.pm-sub {
+  margin-top: 22px;
+}
+
+.pm-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pm-modules li {
+  padding: 6px 12px;
+  color: #0f3f35;
+  background: var(--green-tint);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pm-fit {
+  margin-top: 20px;
+  padding: 14px;
+  background: #f2f7f6;
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+}
+
+.pm-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+@media (max-width: 720px) {
+  .pm-box {
+    padding: 18px;
+  }
+
+  .pm-story {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .pm-footer .btn {
+    width: 100%;
+  }
+}
+
+.pm-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.pm-flow li {
+  position: relative;
+  counter-increment: step;
+  padding: 8px 22px 8px 14px;
+  color: var(--ink);
+  background: #f1f5f9;
+  font-size: 13px;
+  font-weight: 700;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+  margin-right: -6px;
+  padding-left: 24px;
+}
+
+.pm-flow li:first-child {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  padding-left: 14px;
+}
+
+.pm-flow li::before {
+  content: counter(step) ". ";
+  color: var(--green);
+}
+
+.pm-extra {
+  margin-top: 22px;
+}
+
+.pm-plain {
+  margin: 0;
+  padding-left: 18px;
+  color: #374151;
+  font-size: 14px;
+}

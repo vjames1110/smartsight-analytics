@@ -1,4 +1,5 @@
 import "./Contact.css";
+import { SITE, whatsappLink, trackEvent } from "../config/site";
 
 function Contact() {
   const whatsappMessage =
@@ -18,31 +19,30 @@ function Contact() {
         <div className="contact-table">
           <div className="contact-row">
             <span className="label">Location</span>
-            <span className="value">Bilaspur, India</span>
+            <span className="value">{SITE.location}</span>
           </div>
 
           <div className="contact-row">
             <span className="label">Phone</span>
-            <a className="value" href="tel:+918374220978">
-              +91 8374220978
+            <a className="value" href={`tel:${SITE.phoneTel}`}>
+              {SITE.phoneDisplay}
             </a>
           </div>
 
           <div className="contact-row">
             <span className="label">Email</span>
-            <a className="value" href="mailto:smartsightanalytics@gmail.com">
-              smartsightanalytics@gmail.com
+            <a className="value" href={`mailto:${SITE.email}`}>
+              {SITE.email}
             </a>
           </div>
         </div>
 
         <a
-          href={`https://wa.me/918374220978?text=${encodeURIComponent(
-            whatsappMessage
-          )}`}
+          href={whatsappLink(whatsappMessage)}
           target="_blank"
           rel="noreferrer"
           className="contact-btn"
+          onClick={() => trackEvent("whatsapp_click", { location: "contact" })}
         >
           Book Free Consultation
         </a>

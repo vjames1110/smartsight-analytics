@@ -1,0 +1,265 @@
+.mock {
+  overflow: hidden;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.mock-bar-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  background: var(--navy);
+}
+
+.mock-bar-top span {
+  width: 9px;
+  height: 9px;
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+}
+
+.mock-bar-top b {
+  margin-left: 8px;
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mock-body {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+}
+
+.mock-nav {
+  margin: 0;
+  padding: 12px 8px;
+  list-style: none;
+  background: #f8fafc;
+  border-right: 1px solid var(--border);
+}
+
+.mock-nav li {
+  margin-bottom: 3px;
+  padding: 6px 8px;
+  color: var(--muted);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.mock-nav li.active {
+  color: #ffffff;
+  background: var(--green);
+}
+
+.mock-main {
+  padding: 14px;
+}
+
+.mock-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mock-kpi {
+  padding: 10px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.mock-kpi small {
+  display: block;
+  color: var(--muted);
+  font-size: 10.5px;
+}
+
+.mock-kpi strong {
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.mock-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 10px;
+}
+
+.mock-panel {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.mock-panel h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+}
+
+.mock-chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mock-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.mock-axis {
+  fill: var(--muted);
+  font-size: 9px;
+}
+
+.mock-bar-0 {
+  fill: var(--green);
+  background: var(--green);
+}
+
+.mock-bar-1 {
+  fill: var(--gold);
+  background: var(--gold);
+}
+
+.mock-legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 10.5px;
+}
+
+.mock-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+
+.mock table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mock th,
+.mock td {
+  padding: 5px 4px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 10.5px;
+}
+
+.mock th {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.mock-pill {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mock-pill.good {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.mock-pill.warn {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.mock-pill.bad {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.mock-pill.muted {
+  color: #475569;
+  background: #e2e8f0;
+}
+
+.mock-area {
+  fill: var(--green);
+  opacity: 0.12;
+}
+
+.mock-line {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.mock-dot {
+  fill: #ffffff;
+  stroke: var(--green);
+  stroke-width: 2;
+}
+
+.mock-progress {
+  display: grid;
+  gap: 9px;
+  padding-top: 4px;
+}
+
+.mock-progress-row {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) 34px;
+  gap: 8px;
+  align-items: center;
+  font-size: 10.5px;
+}
+
+.mock-progress-row span {
+  color: var(--muted);
+}
+
+.mock-progress-track {
+  height: 8px;
+  overflow: hidden;
+  background: #e2e8f0;
+  border-radius: 999px;
+}
+
+.mock-progress-track div {
+  height: 100%;
+  background: var(--green);
+  border-radius: 999px;
+}
+
+.mock-pill.info {
+  color: #1e40af;
+  background: #dbeafe;
+}
+
+/* Stack the screen when its container is narrow (phones) */
+@container mockbox (max-width: 620px) {
+  .mock-body {
+    grid-template-columns: 1fr;
+  }
+
+  .mock-nav {
+    display: none;
+  }
+
+  .mock-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mock-panels {
+    grid-template-columns: 1fr;
+  }
+}

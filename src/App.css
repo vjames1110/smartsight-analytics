@@ -3,6 +3,98 @@ section {
   scroll-margin-top: 88px;
 }
 
+
+.section-heading {
+  max-width: 760px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.section-heading h2 {
+  margin-bottom: 14px;
+  color: var(--ink);
+  font-size: clamp(30px, 4vw, 44px);
+}
+
+.section-heading p:not(.section-kicker) {
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.section-kicker {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  color: var(--gold);
+  background: rgba(248, 193, 74, 0.1);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.section-kicker.dark {
+  color: var(--green);
+  background: var(--green-tint);
+}
+
+/* Shared link-styled buttons (avoid nesting <button> inside <a>) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  color: #08111f;
+  background: var(--gold);
+}
+
+.btn-gold:hover {
+  background: var(--gold-hover);
+}
+
+.btn-wa {
+  color: #ffffff;
+  background: var(--wa);
+}
+
+.btn-wa:hover {
+  background: var(--wa-hover);
+}
+
+.btn-dark {
+  color: #ffffff;
+  background: var(--navy);
+}
+
+.btn-dark:hover {
+  background: var(--green);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+}
+
 h1,
 h2,
 h3,
@@ -38,7 +130,7 @@ button {
   min-height: 52px;
   padding: 10px 16px 10px 10px;
   color: #ffffff;
-  background: #16a34a;
+  background: var(--wa);
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
   text-decoration: none;
@@ -49,7 +141,7 @@ button {
 
 .fixed-whatsapp:hover {
   transform: translateY(-3px);
-  background: #15803d;
+  background: var(--wa-hover);
   box-shadow: 0 22px 44px rgba(22, 163, 74, 0.44);
 }
 
@@ -58,11 +150,9 @@ button {
   place-items: center;
   width: 34px;
   height: 34px;
-  color: #16a34a;
+  color: var(--wa);
   background: #ffffff;
   border-radius: 50%;
-  font-size: 12px;
-  letter-spacing: 0;
 }
 
 @media (max-width: 640px) {

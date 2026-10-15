@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pdf": "npm run build && node scripts/build-pdf.js"
   },
   "eslintConfig": {
     "extends": [
@@ -37,7 +38,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "puppeteer-core": "^25.14.0"
   },
   "engines": {
     "node": "18.x"

@@ -20,7 +20,7 @@
   overflow: hidden;
   text-align: left;
   background: #ffffff;
-  border: 1px solid #dfe6ee;
+  border: 1px solid var(--border-strong);
   border-radius: 8px;
   box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -35,7 +35,7 @@
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #111827;
+  background: var(--ink);
 }
 
 .service-image {
@@ -74,12 +74,12 @@
 
 .service-card h3 {
   margin-bottom: 10px;
-  color: #111827;
+  color: var(--ink);
   font-size: 22px;
 }
 
 .service-card p {
-  color: #5b6575;
+  color: var(--muted);
   min-height: 78px;
 }
 
@@ -106,27 +106,23 @@
   top: 0.72em;
   width: 7px;
   height: 7px;
-  background: #1f7663;
+  background: var(--green);
   border-radius: 50%;
 }
 
-.service-card button,
-.whatsapp-btn {
+.service-card button {
   min-height: 44px;
   border: none;
   border-radius: 8px;
   font-weight: 900;
-}
-
-.service-card button {
   width: 100%;
   margin-top: 12px;
   color: #ffffff;
-  background: #0f172a;
+  background: var(--navy);
 }
 
 .service-card button:hover {
-  background: #1f7663;
+  background: var(--green);
 }
 
 .modal-overlay {
@@ -145,7 +141,7 @@
   width: min(720px, 100%);
   max-height: min(88vh, 760px);
   overflow-y: auto;
-  color: #111827;
+  color: var(--ink);
   background: #ffffff;
   border-radius: 8px;
   padding: 24px;
@@ -177,14 +173,12 @@
 .service-close-btn {
   top: 14px;
   right: 14px;
-  padding: 8px 10px;
-  color: #111827;
+  color: var(--ink);
   background: rgba(255, 255, 255, 0.92);
 }
 
 .nav-arrow {
   top: 116px;
-  padding: 8px 10px;
   color: #ffffff;
   background: rgba(15, 23, 42, 0.8);
 }
@@ -198,7 +192,7 @@
 }
 
 .nav-arrow:hover {
-  background: #1f7663;
+  background: var(--green);
 }
 
 .modal-media {
@@ -206,7 +200,7 @@
   overflow: hidden;
   margin-bottom: 20px;
   border-radius: 8px;
-  background: #111827;
+  background: var(--ink);
 }
 
 .modal-image {
@@ -223,7 +217,7 @@
 
 .modal-box h3 {
   margin-bottom: 10px;
-  color: #111827;
+  color: var(--ink);
   font-size: clamp(26px, 4vw, 36px);
 }
 
@@ -236,7 +230,7 @@
   padding: 14px;
   color: #26313f;
   background: #f2f7f6;
-  border-left: 4px solid #1f7663;
+  border-left: 4px solid var(--green);
   border-radius: 8px;
 }
 
@@ -250,24 +244,17 @@
 
 .price {
   margin-bottom: 0;
-  color: #111827 !important;
+  color: var(--ink) !important;
   font-size: 18px;
   font-weight: 900;
 }
 
+.modal-footer {
+  flex-wrap: wrap;
+}
+
 .modal-footer a {
   flex: 0 0 auto;
-}
-
-.whatsapp-btn {
-  color: #ffffff;
-  background: #16a34a;
-  padding: 12px 18px;
-  font-size: 15px;
-}
-
-.whatsapp-btn:hover {
-  background: #15803d;
 }
 
 .dots {
@@ -287,7 +274,7 @@
 }
 
 .dot.active {
-  background: #1f7663;
+  background: var(--green);
 }
 
 @media (max-width: 640px) {
@@ -304,8 +291,7 @@
     flex-direction: column;
   }
 
-  .modal-footer a,
-  .whatsapp-btn {
+  .modal-footer a {
     width: 100%;
   }
 

@@ -1,4 +1,6 @@
 import "./Banner.css";
+import DownloadPortfolio from "./DownloadPortfolio";
+import { whatsappLink, trackEvent } from "../config/site";
 
 function Banner() {
   const whatsappMessage = `
@@ -11,7 +13,7 @@ Timeline:
 `;
 
   return (
-    <section className="banner">
+    <section className="banner" id="top">
       <div className="banner-content">
         <p className="banner-eyebrow">Premium IT services for modern businesses</p>
         <h1>SmartSight Analytics</h1>
@@ -21,12 +23,11 @@ Timeline:
         </p>
         <div className="banner-actions">
           <a
-            href={`https://wa.me/918374220978?text=${encodeURIComponent(
-              whatsappMessage
-            )}`}
+            href={whatsappLink(whatsappMessage)}
             target="_blank"
             rel="noreferrer"
             className="banner-primary"
+            onClick={() => trackEvent("whatsapp_click", { location: "banner" })}
           >
             Get Free Consultation
           </a>
@@ -34,6 +35,8 @@ Timeline:
           <a href="#services" className="banner-secondary">
             Explore Services
           </a>
+
+          <DownloadPortfolio className="banner-secondary" location="banner" />
         </div>
       </div>
     </section>

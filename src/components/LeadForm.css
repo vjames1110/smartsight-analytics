@@ -6,22 +6,11 @@
   color: #ffffff;
   background:
     radial-gradient(circle at top left, rgba(248, 193, 74, 0.18), transparent 34%),
-    linear-gradient(135deg, #0f172a, #12313b 58%, #10251f);
+    linear-gradient(135deg, var(--navy), #12313b 58%, #10251f);
 }
 
 .lead-copy {
   max-width: 680px;
-}
-
-.section-kicker {
-  display: inline-flex;
-  margin-bottom: 12px;
-  padding: 6px 10px;
-  color: #f8c14a;
-  background: rgba(248, 193, 74, 0.1);
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 800;
 }
 
 .lead-form h2 {
@@ -44,7 +33,7 @@
 
 .lead-highlights span {
   padding: 8px 11px;
-  color: #e5e7eb;
+  color: var(--border);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
@@ -53,7 +42,7 @@
 }
 
 .form-box {
-  color: #111827;
+  color: var(--ink);
   background: #ffffff;
   padding: 28px;
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -68,7 +57,7 @@
   margin-bottom: 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
-  color: #111827;
+  color: var(--ink);
   font: inherit;
   outline: none;
   transition: border 0.2s ease, box-shadow 0.2s ease;
@@ -81,30 +70,41 @@
 
 .form-box input:focus,
 .form-box textarea:focus {
-  border-color: #1f7663;
+  border-color: var(--green);
   box-shadow: 0 0 0 4px rgba(31, 118, 99, 0.12);
 }
 
-.form-box a {
-  text-decoration: none;
-}
-
-.form-box button {
+.form-box .btn {
   width: 100%;
-  min-height: 48px;
-  color: #ffffff;
-  background: #16a34a;
-  border: none;
-  padding: 12px;
   font-size: 16px;
-  font-weight: 800;
-  border-radius: 8px;
-  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.form-box button:hover {
-  background: #15803d;
-  transform: translateY(-1px);
+.lead-review {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lead-review li {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+}
+
+.lead-review strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--gold);
+  font-size: 14px;
+}
+
+.lead-review span {
+  color: #cbd5e1;
+  font-size: 14px;
 }
 
 .fallback {
@@ -118,4 +118,22 @@
   .lead-form {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 480px) {
+  .lead-review {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

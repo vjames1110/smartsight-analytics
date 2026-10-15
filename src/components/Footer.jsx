@@ -1,4 +1,5 @@
 import "./Footer.css";
+import { PORTFOLIO_PDF, trackEvent } from "../config/site";
 
 function Footer() {
   return (
@@ -12,6 +13,13 @@ function Footer() {
 
         <div className="footer-links">
           <a href="#services">Services</a>
+          <a
+            href={PORTFOLIO_PDF}
+            download="SmartSight-Portfolio.pdf"
+            onClick={() => trackEvent("portfolio_download", { location: "footer" })}
+          >
+            Download Portfolio
+          </a>
           <a href="#audit">Free Audit</a>
           <a href="#portfolio">Portfolio</a>
           <a href="#privacy">Privacy</a>
