@@ -84,6 +84,17 @@ section {
   background: var(--green);
 }
 
+.btn-outline {
+  color: var(--ink);
+  background: #ffffff;
+  border: 2px solid var(--border-strong);
+}
+
+.btn-outline:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
 .icon-btn {
   display: inline-flex;
   align-items: center;

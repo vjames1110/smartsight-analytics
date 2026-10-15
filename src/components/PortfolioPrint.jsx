@@ -1,7 +1,8 @@
 import "./PortfolioPrint.css";
-import MockScreen from "./portfolio/MockScreen";
+import ProductVisual from "./portfolio/ProductVisual";
+import { themeVars } from "./portfolio/tones";
 import { products, DOMAINS, STATUS, getDomainsInUse } from "../data/products";
-import { SITE } from "../config/site";
+import { SITE, phoneList } from "../config/site";
 
 const Footer = ({ page }) => (
   <div className="pp-footer">
@@ -10,20 +11,35 @@ const Footer = ({ page }) => (
   </div>
 );
 
+const optionalModules = (product) =>
+  product.moduleGroups
+    .filter((g) => !g.core)
+    .flatMap((g) => g.modules.map((m) => m.name));
+
 // Print-only view, opened as /?print=1. scripts/build-pdf.js renders it to PDF.
 function PortfolioPrint() {
-  const built = products.filter((p) => p.kind === "product");
+  const apps = products.filter((p) => p.kind === "product");
   const dashboards = products.filter((p) => p.kind === "dashboard");
   const domains = getDomainsInUse();
+
+  // Page plan: cover (1), about (2), then one page per app (+1 for suites with
+  // a module catalogue), then dashboards and the closing page.
+  let next = 3;
+  const plan = apps.map((product) => {
+    const page = next;
+    next += product.moduleGroups ? 2 : 1;
+    return { product, page, planPage: product.moduleGroups ? page + 1 : null };
+  });
+  const dashboardPage = next;
 
   return (
     <div className="pp-root">
       <section className="pp-page pp-cover">
-        <img src="/images/ssa-logo.png" alt="SmartSight Analytics" />
+        <img src="/images/print/logo.png" alt="SmartSight Analytics" />
         <h1>Products & Solutions Portfolio</h1>
         <p className="pp-cover-sub">
-          Custom ERP, web and mobile apps, software and analytics, built around
-          your business process.
+          Real-world business problems, solved with custom web and mobile apps,
+          ERP and analytics, built around your process.
         </p>
         <ul className="pp-cover-domains">
           {domains.map((key) => (
@@ -33,8 +49,9 @@ function PortfolioPrint() {
         <div className="pp-cover-contact">
           <strong>{SITE.name}</strong>
           <span>
-            {SITE.phoneDisplay} · {SITE.email}
+            {phoneList()} · {SITE.email}
           </span>
+          <span>{SITE.website}</span>
           <span>{SITE.location}</span>
         </div>
       </section>
@@ -48,7 +65,9 @@ function PortfolioPrint() {
           We design and build websites, web and mobile apps, ERP systems,
           custom software and dashboards around how your business actually
           works. The products in this portfolio are our starting points, each
-          one adapted to the client process, roles and data.
+          one adapted to the client process, roles and data. Complete suites
+          such as BuildX ERP and MediCore HMS are modular: the plan follows the
+          modules a company opts for.
         </p>
 
         <div className="pp-story">
@@ -75,18 +94,21 @@ function PortfolioPrint() {
 
         <h3>In this portfolio</h3>
         <ul className="pp-contents">
-          {built.map((product, i) => (
+          {plan.map(({ product, page, planPage }) => (
             <li key={product.id}>
-              <span>{product.name}</span>
+              <span>
+                {product.name}
+                {planPage ? " (with modules & plans)" : ""}
+              </span>
               <em>{DOMAINS[product.domain].label}</em>
-              <b>{i + 3}</b>
+              <b>{planPage ? `${page}–${planPage}` : page}</b>
             </li>
           ))}
           {dashboards.length > 0 && (
             <li>
               <span>Analytics dashboards</span>
               <em>{DOMAINS.analytics.label}</em>
-              <b>{built.length + 3}</b>
+              <b>{dashboardPage}</b>
             </li>
           )}
         </ul>
@@ -97,11 +119,14 @@ function PortfolioPrint() {
         <Footer page={2} />
       </section>
 
-      {built.map((product, i) => {
+      {plan.flatMap(({ product, page, planPage }) => {
         const domain = DOMAINS[product.domain];
-        const page = i + 3;
-        return (
-          <section className="pp-page" key={product.id}>
+        const pages = [
+          <section
+            className="pp-page"
+            key={product.id}
+            style={themeVars(product.theme)}
+          >
             <div className="pp-badges">
               <span style={{ "--accent": domain.accent }} className="pp-domain">
                 {domain.label}
@@ -109,12 +134,17 @@ function PortfolioPrint() {
               <span className={`pp-status ${STATUS[product.status].tone}`}>
                 {STATUS[product.status].label}
               </span>
+              <span className="pp-platform">{product.platforms}</span>
             </div>
             <h2>{product.name}</h2>
             <p className="pp-tagline">{product.tagline}</p>
 
-            <MockScreen product={product} screen={product.screens[0]} />
-            <p className="pp-note">Illustrative screen with sample data.</p>
+            <ProductVisual product={product} phoneScale={0.78} />
+            <p className="pp-note">
+              {product.status === "blueprint"
+                ? "Solution blueprint: built to your requirement. Illustrative web and mobile screens with sample data."
+                : "Illustrative web and mobile screens with sample data."}
+            </p>
 
             <div className="pp-story">
               <div>
@@ -135,7 +165,7 @@ function PortfolioPrint() {
               </ol>
             )}
 
-            <h3>Core modules</h3>
+            <h3>{product.moduleGroups ? "Headline modules" : "Core modules"}</h3>
             <ul className="pp-modules">
               {product.modules.map((m) => (
                 <li key={m}>{m}</li>
@@ -159,8 +189,74 @@ function PortfolioPrint() {
               <strong>Best fit:</strong> {product.bestFor}
             </p>
             <Footer page={page} />
-          </section>
-        );
+          </section>,
+        ];
+
+        if (planPage) {
+          pages.push(
+            <section
+              className="pp-page"
+              key={`${product.id}-plan`}
+              style={themeVars(product.theme)}
+            >
+              <div className="pp-badges">
+                <span className="pp-domain" style={{ "--accent": domain.accent }}>
+                  {domain.label}
+                </span>
+                <span className={`pp-status ${STATUS[product.status].tone}`}>
+                  {STATUS[product.status].label}
+                </span>
+              </div>
+              <h2>{product.name}: modules & plans</h2>
+              <p className="pp-tagline">{product.editionNote}</p>
+
+              <div className="pp-groups">
+                {product.moduleGroups.map((group) => (
+                  <div className="pp-group" key={group.title}>
+                    <h3>
+                      {group.title}
+                      {group.core && <em>Always included</em>}
+                    </h3>
+                    <ul>
+                      {group.modules.map((m) => (
+                        <li key={m.name}>
+                          <b>{m.name}</b>
+                          <span>{m.desc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              <h3>Suggested starting points</h3>
+              <div className="pp-presets">
+                {product.presets.map((preset) => {
+                  const count =
+                    preset.modules === "all"
+                      ? optionalModules(product).length
+                      : preset.modules.length;
+                  return (
+                    <div key={preset.name}>
+                      <strong>{preset.name}</strong>
+                      <span>
+                        {preset.modules === "all"
+                          ? `All ${count} modules`
+                          : `${count} modules`}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="pp-note">
+                Plans are built from the modules you choose, plus the number of
+                users and sites. Contact us for a quote and a live demo.
+              </p>
+              <Footer page={planPage} />
+            </section>
+          );
+        }
+        return pages;
       })}
 
       {dashboards.length > 0 && (
@@ -178,7 +274,10 @@ function PortfolioPrint() {
           <div className="pp-dash-list">
             {dashboards.map((d) => (
               <div className="pp-dash" key={d.id}>
-                <img src={d.image} alt="" />
+                <img
+                  src={d.image.replace("/images/", "/images/print/").replace(".webp", ".jpg")}
+                  alt=""
+                />
                 <div>
                   <h3>{d.name}</h3>
                   <p>{d.solution}</p>
@@ -189,7 +288,7 @@ function PortfolioPrint() {
               </div>
             ))}
           </div>
-          <Footer page={built.length + 3} />
+          <Footer page={dashboardPage} />
         </section>
       )}
 
@@ -203,8 +302,9 @@ function PortfolioPrint() {
         </p>
         <div className="pp-cover-contact">
           <strong>{SITE.name}</strong>
-          <span>WhatsApp / Phone: {SITE.phoneDisplay}</span>
+          <span>WhatsApp / Phone: {phoneList()}</span>
           <span>{SITE.email}</span>
+          <span>{SITE.website}</span>
           <span>{SITE.location}</span>
         </div>
       </section>

@@ -1,3 +1,5 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /?print=1
+
+Sitemap: https://smartsightanalytics.com/sitemap.xml

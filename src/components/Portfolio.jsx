@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
+import { lazy, Suspense, useState, useCallback, useEffect } from "react";
 import "./Portfolio.css";
-import ProductModal from "./portfolio/ProductModal";
-import MockScreen from "./portfolio/MockScreen";
+import ProductVisual from "./portfolio/ProductVisual";
 import ScaledPreview from "./portfolio/ScaledPreview";
+import LazyMount from "./portfolio/LazyMount";
 import DownloadPortfolio from "./DownloadPortfolio";
 import {
   products,
@@ -12,28 +12,30 @@ import {
 } from "../data/products";
 import { whatsappLink, trackEvent } from "../config/site";
 
+const ProductModal = lazy(() => import("./portfolio/ProductModal"));
+
 const valueProps = [
   {
     title: "Built around your process",
     text: "Every product is configured to your workflow, not the other way round.",
   },
   {
+    title: "Web and mobile apps",
+    text: "Each solution comes with a web app and a mobile app for your field and office teams.",
+  },
+  {
     title: "Demo with sample data",
     text: "Review working screens first. Your own data is never used in demos.",
   },
   {
-    title: "Handover and training",
-    text: "Documentation, user training and a clear handover on delivery.",
-  },
-  {
-    title: "Ongoing support",
-    text: "Monthly support for fixes, reports and new features after launch.",
+    title: "Handover and support",
+    text: "Documentation, user training, go-live help and monthly support.",
   },
 ];
 
 const customizeSteps = [
   { title: "Share your requirement", text: "Tell us your process and pain points on WhatsApp." },
-  { title: "Pick a starting point", text: "We map the closest product and the modules you need." },
+  { title: "Pick your modules", text: "We map the closest product and the modules you need. Plans follow your choices." },
   { title: "Configure and build", text: "We adapt screens, roles, approvals and reports to you." },
   { title: "Launch and support", text: "Testing, training, go-live and monthly support." },
 ];
@@ -41,6 +43,7 @@ const customizeSteps = [
 function ProductCard({ product, onOpen }) {
   const domain = DOMAINS[product.domain];
   const status = STATUS[product.status];
+  const isDashboard = product.kind === "dashboard";
 
   return (
     <article className="product-card">
@@ -48,15 +51,23 @@ function ProductCard({ product, onOpen }) {
         type="button"
         className="product-card-hit"
         onClick={() => onOpen(product)}
-        aria-label={`View details of ${product.name}`}
       >
-        <div className="product-preview">
-          {product.kind === "dashboard" ? (
+        <div
+          className={`product-preview ${isDashboard ? "" : "app"}`}
+          style={
+            isDashboard
+              ? undefined
+              : { background: `linear-gradient(135deg, ${product.theme.tint}, #ffffff)` }
+          }
+        >
+          {isDashboard ? (
             <img src={product.image} alt="" loading="lazy" />
           ) : (
-            <ScaledPreview>
-              <MockScreen product={product} screen={product.screens[0]} />
-            </ScaledPreview>
+            <LazyMount>
+              <ScaledPreview baseWidth={680}>
+                <ProductVisual product={product} />
+              </ScaledPreview>
+            </LazyMount>
           )}
         </div>
 
@@ -68,16 +79,17 @@ function ProductCard({ product, onOpen }) {
             <span className={`product-status ${status.tone}`}>
               {status.label}
             </span>
+            <span className="product-platform">
+              {isDashboard ? "Analytics dashboard" : product.platforms}
+            </span>
           </div>
           <h3>{product.name}</h3>
-          <p>{product.tagline}</p>
-          <ul>
-            {product.modules.slice(0, 3).map((m) => (
-              <li key={m}>{m}</li>
-            ))}
-          </ul>
+          <p className="product-tagline">{product.tagline}</p>
+          <p className="product-problem">
+            <b>The problem:</b> {product.problem}
+          </p>
           <span className="product-cta">
-            {product.kind === "dashboard" ? "Open live dashboard" : "View details"}
+            {isDashboard ? "Open live dashboard" : "View details"}
           </span>
         </div>
       </button>
@@ -88,11 +100,34 @@ function ProductCard({ product, onOpen }) {
 function Portfolio() {
   const [filter, setFilter] = useState("all");
   const [selected, setSelected] = useState(null);
-  const closeModal = useCallback(() => setSelected(null), []);
+
+  const closeModal = useCallback(() => {
+    setSelected(null);
+    if (window.location.hash.startsWith("#product-")) {
+      window.history.replaceState(null, "", "#portfolio");
+    }
+  }, []);
+
+  // Deep links such as #product-buildx open that product directly
+  useEffect(() => {
+    const openFromHash = () => {
+      const match = window.location.hash.match(/^#product-(.+)$/);
+      if (!match) return;
+      const found = products.find((p) => p.id === match[1]);
+      if (!found) return;
+      setSelected(found);
+      document.getElementById("portfolio")?.scrollIntoView();
+    };
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, []);
 
   const domainsInUse = getDomainsInUse();
   const visible =
     filter === "all" ? products : products.filter((p) => p.domain === filter);
+  const apps = visible.filter((p) => p.kind === "product");
+  const dashboards = visible.filter((p) => p.kind === "dashboard");
 
   const openProduct = (product) => {
     trackEvent("view_product", { product: product.name });
@@ -105,9 +140,10 @@ function Portfolio() {
         <p className="section-kicker dark">Products & Portfolio</p>
         <h2>Software We Have Built, Adapted to Your Business</h2>
         <p>
-          Explore our ready-to-adapt products and live dashboards. Every
-          solution is customized around your process, so if you do not see your
-          industry, we will build it for you.
+          Real-world business problems, solved with web and mobile apps.
+          Explore our products and live analytics dashboards. Every solution is
+          customized around your process, so if you do not see your industry,
+          we will build it for you.
         </p>
         <div className="portfolio-download">
           <DownloadPortfolio location="portfolio_section" />
@@ -145,11 +181,46 @@ function Portfolio() {
         ))}
       </div>
 
-      <div className="product-grid">
-        {visible.map((product) => (
-          <ProductCard key={product.id} product={product} onOpen={openProduct} />
-        ))}
-      </div>
+      <ul className="status-legend" aria-label="What the status labels mean">
+        <li>
+          <span className="product-status ready">Production-ready</span>
+          Built and in use
+        </li>
+        <li>
+          <span className="product-status development">In development</span>
+          Being built now
+        </li>
+        <li>
+          <span className="product-status blueprint">Buildable on request</span>
+          Blueprint we build to your spec
+        </li>
+      </ul>
+
+      {apps.length > 0 && (
+        <>
+          <h3 className="group-title">
+            Web & mobile applications <span>{apps.length}</span>
+          </h3>
+          <div className="product-grid">
+            {apps.map((product) => (
+              <ProductCard key={product.id} product={product} onOpen={openProduct} />
+            ))}
+          </div>
+        </>
+      )}
+
+      {dashboards.length > 0 && (
+        <>
+          <h3 className="group-title">
+            Analytics dashboards <span>{dashboards.length}</span>
+          </h3>
+          <div className="product-grid">
+            {dashboards.map((product) => (
+              <ProductCard key={product.id} product={product} onOpen={openProduct} />
+            ))}
+          </div>
+        </>
+      )}
 
       <p className="portfolio-footnote">
         Product screens use illustrative sample data.
@@ -187,7 +258,11 @@ function Portfolio() {
         </a>
       </div>
 
-      {selected && <ProductModal product={selected} onClose={closeModal} />}
+      {selected && (
+        <Suspense fallback={null}>
+          <ProductModal product={selected} onClose={closeModal} />
+        </Suspense>
+      )}
     </section>
   );
 }

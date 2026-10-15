@@ -1,8 +1,20 @@
+import { useEffect, useState } from "react";
 import "./Banner.css";
 import DownloadPortfolio from "./DownloadPortfolio";
 import { whatsappLink, trackEvent } from "../config/site";
 
 function Banner() {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    import("../data/products").then(({ products, getDomainsInUse }) =>
+      setStats({
+        industries: getDomainsInUse().filter((d) => d !== "analytics").length,
+        solutions: products.length,
+      })
+    );
+  }, []);
+
   const whatsappMessage = `
 Hi,
 I would like to discuss a project with SmartSight Analytics.
@@ -38,6 +50,20 @@ Timeline:
 
           <DownloadPortfolio className="banner-secondary" location="banner" />
         </div>
+
+        <ul className="banner-stats">
+          {stats && (
+            <>
+              <li>
+                <strong>{stats.industries}</strong> industries
+              </li>
+              <li>
+                <strong>{stats.solutions}</strong> solutions & dashboards
+              </li>
+            </>
+          )}
+          <li>Built around your process</li>
+        </ul>
       </div>
     </section>
   );

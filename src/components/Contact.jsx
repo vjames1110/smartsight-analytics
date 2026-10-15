@@ -24,9 +24,13 @@ function Contact() {
 
           <div className="contact-row">
             <span className="label">Phone</span>
-            <a className="value" href={`tel:${SITE.phoneTel}`}>
-              {SITE.phoneDisplay}
-            </a>
+            <span className="value value-phones">
+              {SITE.phones.map((p) => (
+                <a key={p.tel} href={`tel:${p.tel}`}>
+                  {p.display}
+                </a>
+              ))}
+            </span>
           </div>
 
           <div className="contact-row">

@@ -1,0 +1,137 @@
+.plan {
+  margin-top: 6px;
+}
+
+.plan-intro {
+  margin: 0 0 14px;
+  color: #374151;
+  font-size: 14px;
+}
+
+.plan-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.plan-presets button {
+  min-height: 38px;
+  padding: 7px 16px;
+  color: #475569;
+  background: #eef2f7;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.plan-presets button:hover {
+  background: #e2e8f0;
+}
+
+.plan-presets button.active {
+  color: #ffffff;
+  background: var(--m-accent, var(--green));
+}
+
+.plan-custom {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.plan-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.plan-group {
+  margin: 0;
+  padding: 12px 14px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: #ffffff;
+}
+
+.plan-group legend {
+  padding: 0 6px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.plan-group legend em {
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.plan-group label {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 7px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.plan-group label:hover {
+  background: #f8fafc;
+}
+
+.plan-group input {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  accent-color: var(--m-accent, var(--green));
+}
+
+.plan-group label span b {
+  display: block;
+  color: var(--ink);
+  font-size: 13.5px;
+}
+
+.plan-group label span small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.plan-group label.on span b {
+  color: var(--m-accent, var(--green));
+}
+
+.plan-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 16px 18px;
+  background: var(--m-tint, var(--green-tint));
+  border-radius: var(--radius);
+}
+
+.plan-summary small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+@media (max-width: 720px) {
+  .plan-summary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .plan-summary .btn {
+    width: 100%;
+  }
+}

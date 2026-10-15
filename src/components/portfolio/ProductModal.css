@@ -72,7 +72,7 @@
 }
 
 .pm-domain {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 72%, #000000);
   background: color-mix(in srgb, var(--accent) 12%, #ffffff);
 }
 
@@ -92,7 +92,10 @@
 }
 
 .pm-tabs {
-  display: inline-flex;
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  width: fit-content;
   gap: 6px;
   margin-bottom: 12px;
   padding: 5px;
@@ -101,6 +104,8 @@
 }
 
 .pm-tabs button {
+  flex-shrink: 0;
+  white-space: nowrap;
   min-height: 36px;
   padding: 6px 14px;
   color: #475569;
@@ -271,4 +276,155 @@
   padding-left: 18px;
   color: #374151;
   font-size: 14px;
+}
+
+.pm-blueprint {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px dashed #94a3b8;
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+
+.pm-platform {
+  padding: 4px 10px;
+  color: #334155;
+  background: #f1f5f9;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pm-platform-switch {
+  display: inline-flex;
+  gap: 4px;
+  margin: 0 0 12px;
+  padding: 4px;
+  background: var(--m-dark, var(--navy));
+  border-radius: 999px;
+}
+
+.pm-platform-switch button {
+  min-height: 36px;
+  padding: 6px 18px;
+  color: #cbd5e1;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.pm-platform-switch button.active {
+  color: #ffffff;
+  background: var(--m-accent, var(--green));
+}
+
+.pm-tabs button.active {
+  background: var(--m-accent, var(--green));
+}
+
+.pm-phones {
+  display: flex;
+  gap: 26px;
+  padding: 26px;
+  overflow-x: auto;
+  justify-content: safe center;
+  background: linear-gradient(135deg, var(--m-tint, #e7f5ef), #ffffff);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.pm-phones figure {
+  margin: 0;
+  text-align: center;
+}
+
+.pm-phones figcaption {
+  margin-top: 12px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.pm-platform {
+  padding: 4px 10px;
+  color: #334155;
+  background: #f1f5f9;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pm-platform-switch {
+  display: inline-flex;
+  gap: 4px;
+  margin: 0 0 12px;
+  padding: 4px;
+  background: var(--m-dark, var(--navy));
+  border-radius: 999px;
+}
+
+.pm-platform-switch button {
+  min-height: 36px;
+  padding: 6px 18px;
+  color: #cbd5e1;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.pm-platform-switch button.active {
+  color: #ffffff;
+  background: var(--m-accent, var(--green));
+}
+
+.pm-tabs button.active {
+  background: var(--m-accent, var(--green));
+}
+
+.pm-modules li {
+  color: var(--ink);
+  background: var(--m-tint, var(--green-tint));
+}
+
+.pm-fit {
+  border-left-color: var(--m-accent, var(--green));
+}
+
+.pm-flow li::before {
+  color: var(--m-accent, var(--green));
+}
+
+.pm-phones {
+  display: flex;
+  gap: 26px;
+  padding: 26px;
+  overflow-x: auto;
+  justify-content: safe center;
+  background: linear-gradient(135deg, var(--m-tint, #e7f5ef), #ffffff);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.pm-phones figure {
+  margin: 0;
+  text-align: center;
+}
+
+.pm-phones figcaption {
+  margin-top: 12px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.pm-box:focus,
+.modal-box:focus,
+.sidebar:focus {
+  outline: none;
 }

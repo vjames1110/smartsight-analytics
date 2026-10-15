@@ -1,28 +1,6 @@
 import "./MockScreen.css";
+import { toneOf, themeVars } from "./tones";
 
-const PILL_TONES = {
-  Paid: "good",
-  Active: "good",
-  Done: "good",
-  Delivered: "good",
-  Approved: "good",
-  OK: "good",
-  "On track": "good",
-  Discharged: "good",
-  Due: "warn",
-  Pending: "warn",
-  Low: "warn",
-  Waiting: "warn",
-  Overdue: "bad",
-  Delayed: "bad",
-  Critical: "bad",
-  Expiring: "bad",
-  Admitted: "info",
-  "In progress": "info",
-  "In consult": "info",
-  Draft: "muted",
-  Closed: "muted",
-};
 
 const W = 360;
 const H = 130;
@@ -142,9 +120,54 @@ function ProgressChart({ chart }) {
   );
 }
 
+// Signed bars around a zero line: gold above (excess), red below (short)
+function VarianceChart({ chart }) {
+  const values = chart.series[0].values;
+  const maxAbs = Math.max(...values.map(Math.abs)) * 1.15 || 1;
+  const mid = H / 2;
+  const groupW = (W - PAD * 2) / chart.labels.length;
+  const barW = Math.min(26, groupW - 10);
+
+  return (
+    <svg
+      className="mock-chart-svg"
+      viewBox={`0 0 ${W} ${H + 18}`}
+      role="img"
+      aria-label={chart.title}
+    >
+      <line x1={PAD} x2={W - PAD} y1={mid} y2={mid} className="mock-zero" />
+      {chart.labels.map((label, i) => {
+        const v = values[i];
+        const h = (Math.abs(v) / maxAbs) * mid;
+        return (
+          <g key={label}>
+            <rect
+              x={PAD + groupW * i + (groupW - barW) / 2}
+              y={v >= 0 ? mid - h : mid}
+              width={barW}
+              height={Math.max(h, 1.5)}
+              rx="2"
+              className={v >= 0 ? "mock-bar-pos" : "mock-bar-neg"}
+            />
+            <text
+              x={PAD + groupW * i + groupW / 2}
+              y={H + 13}
+              textAnchor="middle"
+              className="mock-axis"
+            >
+              {label}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 function Chart({ chart }) {
   if (chart.type === "line") return <LineChart chart={chart} />;
   if (chart.type === "progress") return <ProgressChart chart={chart} />;
+  if (chart.type === "variance") return <VarianceChart chart={chart} />;
   return <BarChart chart={chart} />;
 }
 
@@ -153,7 +176,10 @@ function MockScreen({ product, screen }) {
   const { chart, table } = screen;
 
   return (
-    <div className="mock">
+    <div
+      className={`mock v-${product.variant || "sidebar"}`}
+      style={themeVars(product.theme)}
+    >
       <div className="mock-bar-top">
         <span></span>
         <span></span>
@@ -186,6 +212,16 @@ function MockScreen({ product, screen }) {
             <div className="mock-panel">
               <h4>{chart.title}</h4>
               <Chart chart={chart} />
+              {chart.type === "variance" && (
+                <div className="mock-legend">
+                  <span>
+                    <i className="mock-bar-pos"></i>Excess
+                  </span>
+                  <span>
+                    <i className="mock-bar-neg"></i>Short
+                  </span>
+                </div>
+              )}
               {chart.series.length > 1 && chart.type !== "line" && (
                 <div className="mock-legend">
                   {chart.series.map((s, j) => (
@@ -216,7 +252,7 @@ function MockScreen({ product, screen }) {
                           {i === table.pillCol ? (
                             <span
                               className={`mock-pill ${
-                                PILL_TONES[cell] || "muted"
+                                toneOf(cell)
                               }`}
                             >
                               {cell}

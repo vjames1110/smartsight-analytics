@@ -1,25 +1,47 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./ProductModal.css";
 import MockScreen from "./MockScreen";
+import PhoneMock from "./PhoneMock";
+import PlanBuilder from "./PlanBuilder";
 import ScaledEmbed from "./ScaledEmbed";
+import { themeVars } from "./tones";
 import DownloadPortfolio from "../DownloadPortfolio";
 import { CloseIcon, ExternalLinkIcon } from "../Icons";
 import useModalBehavior from "../../hooks/useModalBehavior";
 import { DOMAINS, STATUS, productWhatsappText } from "../../data/products";
-import { whatsappLink, trackEvent } from "../../config/site";
+import { whatsappLink, trackEvent, SITE_URL } from "../../config/site";
 
 function ProductModal({ product, onClose }) {
+  const [platform, setPlatform] = useState("web");
   const [screenIndex, setScreenIndex] = useState(0);
-  useModalBehavior(true, onClose);
+  const boxRef = useRef(null);
+  const [copied, setCopied] = useState(false);
+  useModalBehavior(true, onClose, boxRef);
+
+  const copyLink = async () => {
+    const link = `${SITE_URL}/#product-${product.id}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopied(true);
+      trackEvent("copy_product_link", { product: product.name });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.prompt("Copy this link", link);
+    }
+  };
 
   const domain = DOMAINS[product.domain];
   const status = STATUS[product.status];
   const isDashboard = product.kind === "dashboard";
+  const hasPlans = Boolean(product.moduleGroups);
 
   return (
     <div className="pm-overlay" onClick={onClose}>
       <div
+        ref={boxRef}
+        tabIndex={-1}
         className={`pm-box ${isDashboard ? "wide" : ""}`}
+        style={themeVars(product.theme)}
         role="dialog"
         aria-modal="true"
         aria-label={product.name}
@@ -40,10 +62,20 @@ function ProductModal({ product, onClose }) {
               {domain.label}
             </span>
             <span className={`pm-status ${status.tone}`}>{status.label}</span>
+            <span className="pm-platform">
+              {isDashboard ? "Analytics dashboard" : product.platforms}
+            </span>
           </div>
           <h3>{product.name}</h3>
           <p>{product.tagline}</p>
         </div>
+
+        {product.status === "blueprint" && (
+          <p className="pm-blueprint">
+            This is a solution blueprint. We build it to your requirement, and
+            the screens show how it could look with sample data.
+          </p>
+        )}
 
         {isDashboard ? (
           <div className="pm-embed">
@@ -63,25 +95,65 @@ function ProductModal({ product, onClose }) {
           </div>
         ) : (
           <div className="pm-screens">
-            {product.screens.length > 1 && (
-              <div className="pm-tabs" role="tablist" aria-label="Screens">
-                {product.screens.map((s, i) => (
-                  <button
-                    key={s.name}
-                    role="tab"
-                    type="button"
-                    aria-selected={i === screenIndex}
-                    className={i === screenIndex ? "active" : ""}
-                    onClick={() => setScreenIndex(i)}
-                  >
-                    {s.name}
-                  </button>
+            <div className="pm-platform-switch" role="tablist" aria-label="Platform">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={platform === "web"}
+                className={platform === "web" ? "active" : ""}
+                onClick={() => setPlatform("web")}
+              >
+                Web app
+              </button>
+              {product.mobile && (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={platform === "mobile"}
+                  className={platform === "mobile" ? "active" : ""}
+                  onClick={() => setPlatform("mobile")}
+                >
+                  Mobile app
+                </button>
+              )}
+            </div>
+
+            {platform === "web" ? (
+              <>
+                {product.screens.length > 1 && (
+                  <div className="pm-tabs" role="tablist" aria-label="Screens">
+                    {product.screens.map((s, i) => (
+                      <button
+                        key={s.name}
+                        role="tab"
+                        type="button"
+                        aria-selected={i === screenIndex}
+                        className={i === screenIndex ? "active" : ""}
+                        onClick={() => setScreenIndex(i)}
+                      >
+                        {s.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <div className="pm-screen-scroll">
+                  <MockScreen
+                    product={product}
+                    screen={product.screens[screenIndex]}
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="pm-phones">
+                {product.mobile.screens.map((s) => (
+                  <figure key={s.name}>
+                    <PhoneMock product={product} screen={s} scale={1.05} />
+                    <figcaption>{s.name}</figcaption>
+                  </figure>
                 ))}
               </div>
             )}
-            <div className="pm-screen-scroll">
-              <MockScreen product={product} screen={product.screens[screenIndex]} />
-            </div>
+
             <p className="pm-note">
               Illustrative screens with sample data. Your version is built
               around your own process and data.
@@ -111,12 +183,20 @@ function ProductModal({ product, onClose }) {
           </>
         )}
 
-        <h4 className="pm-sub">{isDashboard ? "What it covers" : "Core modules"}</h4>
-        <ul className="pm-modules">
-          {product.modules.map((m) => (
-            <li key={m}>{m}</li>
-          ))}
-        </ul>
+        {hasPlans ? (
+          <PlanBuilder product={product} />
+        ) : (
+          <>
+            <h4 className="pm-sub">
+              {isDashboard ? "What it covers" : "Core modules"}
+            </h4>
+            <ul className="pm-modules">
+              {product.modules.map((m) => (
+                <li key={m}>{m}</li>
+              ))}
+            </ul>
+          </>
+        )}
 
         {(product.roles || product.reports) && (
           <div className="pm-story pm-extra">
@@ -160,14 +240,14 @@ function ProductModal({ product, onClose }) {
               })
             }
           >
-            {product.kind === "dashboard" ? "Get a Similar Dashboard" : "Request a Demo"}
+            {isDashboard ? "Get a Similar Dashboard" : "Request a Demo"}
           </a>
-          <DownloadPortfolio
-            className="btn btn-dark"
-            location="product_modal"
-          >
+          <DownloadPortfolio className="btn btn-dark" location="product_modal">
             Download Portfolio
           </DownloadPortfolio>
+          <button type="button" className="btn btn-outline" onClick={copyLink}>
+            {copied ? "Link copied" : "Copy link"}
+          </button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import "./Header.css";
 import { MenuIcon, CloseIcon } from "./Icons";
 import useModalBehavior from "../hooks/useModalBehavior";
@@ -14,11 +14,12 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
-  useModalBehavior(menuOpen, closeMenu);
+  const sidebarRef = useRef(null);
+  useModalBehavior(menuOpen, closeMenu, sidebarRef);
 
   return (
     <header className="header">
-      <a className="brand" href="#top" aria-label="SmartSight Analytics home">
+      <a className="brand" href="#top">
         <img src="/images/ssalogo.png" alt="" className="logo" />
         <div className="brand-text">
           <p className="brand-name">SmartSight Analytics</p>
@@ -50,6 +51,8 @@ function Header() {
       {menuOpen && <div className="overlay" onClick={closeMenu}></div>}
 
       <div
+        ref={sidebarRef}
+        tabIndex={-1}
         className={`sidebar ${menuOpen ? "open" : ""}`}
         inert={!menuOpen}
       >

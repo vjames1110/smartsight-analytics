@@ -1,16 +1,20 @@
+import { lazy, Suspense } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Banner from "./components/Banner";
-import LeadForm from "./components/LeadForm";
-import HowItWorks from "./components/HowItWorks";
-import Services from "./components/Services";
-import Portfolio from "./components/Portfolio";
-import Privacy from "./components/Privacy";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import PortfolioPrint from "./components/PortfolioPrint";
+import ScrollToHash from "./components/ScrollToHash";
 import { WhatsAppIcon } from "./components/Icons";
 import { SITE, whatsappLink, trackEvent } from "./config/site";
+
+const Flagships = lazy(() => import("./components/Flagships"));
+const Services = lazy(() => import("./components/Services"));
+const Portfolio = lazy(() => import("./components/Portfolio"));
+const HowItWorks = lazy(() => import("./components/HowItWorks"));
+const LeadForm = lazy(() => import("./components/LeadForm"));
+const Privacy = lazy(() => import("./components/Privacy"));
+const Contact = lazy(() => import("./components/Contact"));
+const Footer = lazy(() => import("./components/Footer"));
+const PortfolioPrint = lazy(() => import("./components/PortfolioPrint"));
 
 const isPrintMode =
   typeof window !== "undefined" &&
@@ -19,7 +23,11 @@ const isPrintMode =
 function App() {
   if (isPrintMode) {
     document.body.classList.add("print-mode");
-    return <PortfolioPrint />;
+    return (
+      <Suspense fallback={null}>
+        <PortfolioPrint />
+      </Suspense>
+    );
   }
 
   const whatsappMessage =
@@ -30,14 +38,20 @@ function App() {
       <Header />
       <main>
         <Banner />
-        <Services />
-        <Portfolio />
-        <HowItWorks />
-        <LeadForm />
-        <Privacy />
-        <Contact />
+        <Suspense fallback={null}>
+          <Flagships />
+          <Services />
+          <Portfolio />
+          <HowItWorks />
+          <LeadForm />
+          <Privacy />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+        <ScrollToHash />
+      </Suspense>
 
       <a
         className="fixed-whatsapp"
@@ -45,7 +59,7 @@ function App() {
         target="_blank"
         rel="noreferrer"
         onClick={() => trackEvent("whatsapp_click", { location: "floating" })}
-        aria-label={`Chat with ${SITE.name} on WhatsApp`}
+        aria-label={`WhatsApp: chat with ${SITE.name}`}
       >
         <span className="fixed-whatsapp-mark">
           <WhatsAppIcon />

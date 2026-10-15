@@ -40,18 +40,19 @@ const services = [
   {
     title: "ERP Development",
     description:
-      "Centralized ERP systems for sales, inventory, billing, purchases, HR, finance, and operations.",
+      "Complete, SAP-class ERP systems covering tenders, planning, purchases, stores, machinery, billing, HR and finance. Choose only the modules you need.",
     details: [
-      "Module-wise ERP planning",
-      "Inventory, sales, and billing workflows",
-      "User roles and approvals",
-      "Reports for management decisions",
+      "Modular ERP: your plan follows the modules you opt for",
+      "Tender, planning, procurement, stores and machinery",
+      "Finance, billing, HR and payroll on one database",
+      "Web and mobile apps with role-based approvals",
     ],
     price: "Custom quote",
     image: "/images/erp-development.webp",
     comparison: "Best for companies ready to unify daily operations.",
     whatsappText: "Hi, I want to discuss ERP Development.",
     category: "ERP",
+    link: { href: "#product-buildx", label: "See BuildX ERP" },
   },
   {
     title: "Customized ERP Solutions",
@@ -104,7 +105,7 @@ const services = [
   {
     title: "Industry-Specific Solutions",
     description:
-      "Ready-to-adapt products for construction, healthcare, finance, community, education, logistics and more, customized to your process.",
+      "Complete suites and ready-to-adapt apps for construction, healthcare (hospital management), finance, community, education, logistics and more, built as web and mobile apps around your process.",
     details: [
       "Proven modules you can adapt, not start from zero",
       "Built around your workflow and data",
@@ -139,7 +140,8 @@ function Services() {
   }, []);
 
   const close = useCallback(() => setIndex(null), []);
-  useModalBehavior(index !== null, close);
+  const modalRef = useRef(null);
+  useModalBehavior(index !== null, close, modalRef);
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -199,6 +201,8 @@ function Services() {
       {index !== null && (
         <div className="modal-overlay" onClick={close}>
           <div
+            ref={modalRef}
+            tabIndex={-1}
             className="modal-box"
             role="dialog"
             aria-modal="true"
